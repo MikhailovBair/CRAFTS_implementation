@@ -9,7 +9,7 @@ import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data as data
 from torch.autograd import Variable
-from tqdm.notebook import tqdm
+from tqdm.notebook import tqdm as tq
 
 from CRAFTS import CRAFTS
 from config import config
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     loss_value = 0
     compare_loss = 1
     print("Training ....")
-    for epoch in tqdm(range(cfg.MAX_EPOCH)):
+    for epoch in tq(range(cfg.MAX_EPOCH)):
         train_time_st = time.time()
         loss_value = 0
         if epoch % 50 == 0 and epoch != 0:
