@@ -34,7 +34,6 @@ def copyStateDict(state_dict):
 
 def adjust_learning_rate(optimizer, gamma, step):
     lr = args.LR * (0.8 ** step)
-    print(lr)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
 
