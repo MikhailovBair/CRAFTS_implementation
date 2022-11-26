@@ -1,36 +1,23 @@
-import os, sys, cv2, argparse, time, random, h5py, re, string
-from tqdm import tqdm
-import datetime
+import argparse
+import os
+import random
+import time
+
 import numpy as np
-import scipy.io as scio
-import torch.nn as nn
-import torch.nn.functional as F
+import torch
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
-from math import exp
-from collections import OrderedDict
-from PIL import Image
-
-import torch
 import torch.utils.data as data
-from torchvision.transforms import transforms
 from torch.autograd import Variable
-from torch.multiprocessing import Pool, Process, set_start_method
+from tqdm.notebook import tqdm
 
-from dataloader_new import Dataset
 from CRAFTS import CRAFTS
-import detection.coordinates
-from detection.mseloss import Maploss
-from detection.ResUnet import CRAFT
-
-from recognition.utils import CTCLabelConverter, CTCLabelConverterForBaiduWarpctc, AttnLabelConverter, Averager, \
-    TokenLabelConverter
-from recognition.model import TRBA
-from recognition.collate_fn import RegionAlignCollate
-
-from torchutil import *
-import data_utils
 from config import config
+from dataloader_new import Dataset
+from detection.mseloss import Maploss
+from recognition.collate_fn import RegionAlignCollate
+from recognition.utils import AttnLabelConverter, TokenLabelConverter
+from torchutil import *
 
 
 def copyStateDict(state_dict):
@@ -172,8 +159,8 @@ if __name__ == '__main__':
         st = time.time()
 
         for index, (
-        images, gh_label, gah_label, ori_x, ori_y, word_bboxes_batch, words_batch, words_length_batch) in tqdm(
-                enumerate(data_loader)):
+                images, gh_label, gah_label, ori_x, ori_y, word_bboxes_batch, words_batch, words_length_batch) in tqdm(
+            enumerate(data_loader)):
 
             # Load Variables
             images = Variable(images.type(torch.FloatTensor)).to(device)
@@ -195,18 +182,12 @@ if __name__ == '__main__':
             #             print('--------')
 
             _, preds_index = preds.topk(1, dim=-1, largest=True, sorted=True)
-            preds_index = preds_index.view(-1, converter.batch_max_length)
+            # preds_index = preds_index.view(-1, converter.batch_max_length)
             target_str, pred_str = converter.decode(target, length), converter.decode(preds_index, length)
 
             rand_idx = random.randint(0, target.shape[0] - 1)
-            print('\nsample target : {}'.format(target_str[rand_idx]))
-            print('sample preds : {}'.format(pred_str[rand_idx]))
-            #             except :
-            #                 print('maybe the available cropped images are zero?')
-            #                 print(target.shape[0])
-            #                 print(target.shape)
-            #                 print(preds.shape)
-
+            # print('\nsample target : {}'.format(target_str[rand_idx]))
+            # print('sample preds : {}'.format(pred_str[rand_idx]))
             optimizer.zero_grad()
 
             # calculate loss
@@ -220,7 +201,7 @@ if __name__ == '__main__':
                 STR_loss = STR_criterion(preds.view(-1, preds.shape[-1]), target.contiguous().view(-1))
             else:
                 STR_loss = STR_criterion(preds.view(-1, preds.shape[-1]), target.contiguous().view(-1))
-            print('\nSTD loss : ', STD_loss.item(), end='\n')
+            # print('\nSTD loss : ', STD_loss.item(), end='\n')
             if torch.isnan(STD_loss):
                 torch.save(gh_label, './log/gh_label.pt')
                 torch.save(gah_label, './log/gah_label.pt')
@@ -231,7 +212,7 @@ if __name__ == '__main__':
                 torch.save(out3, './log/out3.pt')
                 torch.save(out4, './log/out4.pt')
 
-            print('STR loss : ', STR_loss.item(), end='\n')
+            # print('STR loss : ', STR_loss.item(), end='\n')
             Total_loss = STD_loss + STR_loss
             Total_loss.backward()
             optimizer.step()

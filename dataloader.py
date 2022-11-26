@@ -688,11 +688,11 @@ class Dataset(craft_base_dataset) :
         if len(character_bboxes) != len(new_words) :
             raise ValueError('# bboxes : {}, words : {} '.format(len(character_bboxes), words))
     
-#         return image, character_bboxes, new_words, confidence_mask, confidences, word_bboxes, image.shape[:2]
+        return image, character_bboxes, new_words, confidence_mask, confidences, word_bboxes, image.shape[:2]
 #                 cv2.fillPoly(confidence_mask, [np.int32(word_bboxes[i])], (confidence))
 # #                 new_words.append(words[i])
 #                 character_bboxes.append(pursedo_bboxes)
-        return image, character_bboxes, words, confidence_mask, confidences, word_bboxes, image.shape[:2]
+#         return image, character_bboxes, words, confidence_mask, confidences, word_bboxes, image.shape[:2]
 
     
     def pull_item(self, index):
