@@ -17,7 +17,7 @@ LR: 1e-4                                                                        
 MOMENTUM: 1e-3                                                                   # Momentum value for optim
 WEIGHT_DECAY: 5e-4                                                               # Weight decay for SGD
 GAMMA: 0.99                                                                      # Gamma update for SGD
-BATCH_SIZE: 8                                                                    # Batch Size
+BATCH_SIZE: 2                                                                    # Batch Size
 MAX_EPOCH: 3000                                                                  # Number of training teration
 visualize_orientation: False                                                      # while inference, visualize orientation results
 training : True
