@@ -102,12 +102,13 @@ def split_edge_seqence(points, long_edge, n_parts):
     edge_length = [norm2(points[e1] - points[e2]) for e1, e2 in long_edge]
     point_cumsum = np.cumsum([0] + edge_length)
     total_length = sum(edge_length)
-    length_per_part = total_length / n_parts
+
 
     cur_node = 0  # first point
     splited_result = []
 
     for i in range(1, n_parts):
+        length_per_part = total_length / n_parts
         cur_end = i * length_per_part
 
         while(cur_end > point_cumsum[cur_node + 1]):

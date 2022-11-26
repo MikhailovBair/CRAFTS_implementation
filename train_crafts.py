@@ -158,9 +158,8 @@ if __name__ == '__main__':
 
         st = time.time()
 
-        for index, (
-                images, gh_label, gah_label, ori_x, ori_y, word_bboxes_batch, words_batch, words_length_batch) in tqdm(
-            enumerate(data_loader)):
+        for index, (images, gh_label, gah_label, ori_x, ori_y, word_bboxes_batch,
+                    words_batch, words_length_batch) in enumerate(data_loader):
 
             # Load Variables
             images = Variable(images.type(torch.FloatTensor)).to(device)
