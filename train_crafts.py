@@ -183,8 +183,8 @@ if __name__ == '__main__':
             target_str, pred_str = converter.decode(target, length), converter.decode(preds_index, length)
 
             rand_idx = random.randint(0, target.shape[0] - 1)
-            # print('\nsample target : {}'.format(target_str[rand_idx]))
-            # print('sample preds : {}'.format(pred_str[rand_idx]))
+            print('\nsample target : {}'.format(target_str[rand_idx]))
+            print('sample preds : {}'.format(pred_str[rand_idx]))
             optimizer.zero_grad()
 
             # calculate loss
