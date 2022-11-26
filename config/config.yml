@@ -4,8 +4,8 @@ SAVED_MODEL_PATH: ''
 MODE: 1                                                                          # 1: train, 2: test
 MODEL: 1                                                                         # 1: CRAFTS, 2: CRAFT, 3: STR
 SEED: 123                                                                        # random seed
-GPU: ['2']                                                                       # list of gpu ids
-WORKERS: 8                                                                       # number of data loading workers
+GPU: ['0']                                                                       # list of gpu ids
+WORKERS: 2                                                                       # number of data loading workers
 CUDA: True                                                                       # 현재, test_crafts는 무조건 cpu모드로 돌아감. line 266
 
 DATA_PATH: ['../train_data/']                                                                    # Path to data loader; should have 'image' and 'label_txt' folder
